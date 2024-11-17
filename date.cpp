@@ -63,65 +63,41 @@ date& date::operator=(const date& obj)
 
 date operator+(date& obj, int x)
 {
-	int buff_day{ obj.day }, buff_month{ obj.month }, buff_year{ obj.year }, buff_week_day{ obj.week_day };
+	int buff_day, buff_month, buff_year, buff_week_day;
+	int buff_day2 = obj.day, buff_month2 = obj.month, buff_year2 = obj.year, buff_week_day2 = obj.week_day;
+	int diff_days;
 
-	if (x >= 31 - obj.day && x < (365 - (obj.month * 31 + obj.day)))
-	{
-		buff_month += x / 31;
-		buff_day += x % 31;
-	}
-	else if (x > 365)
-	{
-		buff_year += x / 365;
-		buff_month += (x % 365) / 31;
-		buff_day += (x % 365) % 31;
-	}
-	else
-	{
-		buff_day += x;
-	}
+	buff_year2 *= 365;
+	buff_month2 *= 31;
+	buff_day2 += buff_year2 + buff_month2;
 
-	if (buff_week_day + (x % 7) > 6)
-	{
-		buff_week_day = 0;
-	}
-	else
-	{
-		buff_week_day += x % 7;
-	}
+	diff_days = x + buff_day2;
 
-	date buff{ buff_day, buff_month, buff_year, buff_week_day }; 
+	buff_year = diff_days / 365;
+	buff_month = (diff_days % 365) / 31;
+	buff_day = ((diff_days % 365) % 31);
+	buff_week_day = diff_days % 7;
+
+	date buff{ buff_day, buff_month, buff_year, buff_week_day };
 
 	return buff;
 }
 date operator+(int x, date& obj)
 {
-	int buff_day{ obj.day }, buff_month{ obj.month }, buff_year{ obj.year }, buff_week_day{ obj.week_day };
+	int buff_day, buff_month, buff_year, buff_week_day;
+	int buff_day2 = obj.day, buff_month2 = obj.month, buff_year2 = obj.year, buff_week_day2 = obj.week_day;
+	int diff_days;
 
-	if (x >= 31 - obj.day && x < (365 - (obj.month * 31 + obj.day)))
-	{
-		buff_month += x / 31;
-		buff_day += x % 31;
-	}
-	else if (x > 365)
-	{
-		buff_year += x / 365;
-		buff_month += (x % 365) / 31;
-		buff_day += (x % 365) % 31;
-	}
-	else
-	{
-		buff_day += x;
-	}
+	buff_year2 *= 365;
+	buff_month2 *= 31;
+	buff_day2 += buff_year2 + buff_month2;
 
-	if (buff_week_day + (x % 7) > 6)
-	{
-		buff_week_day = 0;
-	}
-	else
-	{
-		buff_week_day += x % 7;
-	}
+	diff_days = x + buff_day2;
+
+	buff_year = diff_days / 365;
+	buff_month = (diff_days % 365) / 31;
+	buff_day = ((diff_days % 365) % 31);
+	buff_week_day = diff_days % 7;
 
 	date buff{ buff_day, buff_month, buff_year, buff_week_day };
 
@@ -130,32 +106,20 @@ date operator+(int x, date& obj)
 
 date operator-(date& obj, int x)
 {
-	int buff_day{ obj.day }, buff_month{ obj.month }, buff_year{ obj.year }, buff_week_day{ obj.week_day };
+	int buff_day, buff_month, buff_year, buff_week_day;
+	int buff_day2 = obj.day, buff_month2 = obj.month, buff_year2 = obj.year, buff_week_day2 = obj.week_day;
+	int diff_days;
 
-	if (x >= 31 - obj.day && x < (365 - (obj.month * 31 + obj.day)))
-	{
-		buff_month -= x / 31;
-		buff_day -= x % 31;
-	}
-	else if (x > 365)
-	{
-		buff_year -= x / 365;
-		buff_month -= (x % 365) / 31;
-		buff_day -= (x % 365) % 31;
-	}
-	else
-	{
-		buff_day -= x;
-	}
+	buff_year2 *= 365;
+	buff_month2 *= 31;
+	buff_day2 += buff_year2 + buff_month2;
 
-	if (buff_week_day - (x % 7) < 0)
-	{
-		buff_week_day = 0;
-	}
-	else
-	{
-		buff_week_day += x % 7;
-	}
+	diff_days = x - buff_day2;
+
+	buff_year = diff_days / 365;
+	buff_month = (diff_days % 365) / 31;
+	buff_day = ((diff_days % 365) % 31);
+	buff_week_day = diff_days % 7;
 
 	date buff{ buff_day, buff_month, buff_year, buff_week_day };
 
@@ -255,4 +219,72 @@ istream& operator>>(istream& cin, date& obj)
 	cin >> obj.day >> obj.month >> obj.year >> obj.week_day;
 
 	return cin;
+}
+
+date operator+=(date& obj, int x)
+{
+	int buff_day, buff_month, buff_year, buff_week_day;
+	int buff_day2 = obj.day, buff_month2 = obj.month, buff_year2 = obj.year, buff_week_day2 = obj.week_day;
+	int diff_days;
+
+	buff_year2 *= 365;
+	buff_month2 *= 31;
+	buff_day2 += buff_year2 + buff_month2;
+
+	diff_days = x + buff_day2;
+
+	obj.year = diff_days / 365;
+	obj.month = (diff_days % 365) / 31;
+	obj.day = ((diff_days % 365) % 31);
+	obj.week_day = diff_days % 7;
+
+	return obj;
+}
+
+int operator+=(int x, date& obj)
+{
+	int buff_day2 = obj.day, buff_month2 = obj.month, buff_year2 = obj.year, buff_week_day2 = obj.week_day;
+	int diff_days;
+
+	buff_year2 *= 365;
+	buff_month2 *= 31;
+	buff_day2 += buff_year2 + buff_month2;
+
+	x = x + buff_day2;
+
+	return x;
+}
+
+date operator-=(date& obj, int x)
+{
+	int buff_day, buff_month, buff_year, buff_week_day;
+	int buff_day2 = obj.day, buff_month2 = obj.month, buff_year2 = obj.year, buff_week_day2 = obj.week_day;
+	int diff_days;
+
+	buff_year2 *= 365;
+	buff_month2 *= 31;
+	buff_day2 += buff_year2 + buff_month2;
+
+	diff_days = x - buff_day2;
+
+	obj.year = diff_days / 365;
+	obj.month = (diff_days % 365) / 31;
+	obj.day = ((diff_days % 365) % 31);
+	obj.week_day = diff_days % 7;
+
+	return obj;
+}
+
+int operator-=(int x, date& obj)
+{
+	int buff_day2 = obj.day, buff_month2 = obj.month, buff_year2 = obj.year, buff_week_day2 = obj.week_day;
+	int diff_days;
+
+	buff_year2 *= 365;
+	buff_month2 *= 31;
+	buff_day2 += buff_year2 + buff_month2;
+
+	x = x - buff_day2;
+
+	return x;
 }

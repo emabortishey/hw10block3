@@ -50,7 +50,7 @@ public:
 	int get_year()const { return year; }
 	int get_week_day()const { return week_day; }
 
-	friend date operator+(date& obj, int x); // переделать через дружественные функции в 2-х вариантах: operator+(date obj, int x) и operator+(int x, date obj)
+	friend date operator+(date& obj, int x);
 	friend date operator-(date& obj, int x);
 	friend date operator+(int x, date& obj);
 	friend date operator-(int x, date& obj);
@@ -61,12 +61,17 @@ public:
  
 	friend istream& operator>>(istream& cin, date& obj);
 
-	friend bool operator==(const date& obj, const date& obj2) { return (obj.day == obj2.day && obj.month == obj2.month && obj.year == obj2.year && obj.week_day == obj2.week_day); } // переделать через дружественные функции
+	friend bool operator==(const date& obj, const date& obj2) { return (obj.day == obj2.day && obj.month == obj2.month && obj.year == obj2.year && obj.week_day == obj2.week_day); }
 	friend bool operator!=(const date& obj, const date& obj2) { return (obj.day != obj2.day && obj.month != obj2.month && obj.year != obj2.year && obj.week_day != obj2.week_day); }
 	friend bool operator>(const date& obj, const date& obj2) { return (obj.day > obj2.day && obj.month > obj2.month && obj.year > obj2.year && obj.week_day > obj2.week_day); }
 	friend bool operator<(const date& obj, const date& obj2) { return (obj.day < obj2.day && obj.month < obj2.month && obj.year < obj2.year && obj.week_day < obj2.week_day); }
 	friend bool operator>=(const date& obj, const date& obj2) { return (obj.day >= obj2.day && obj.month >= obj.month && obj.year >= obj2.year && obj.week_day >= obj2.week_day); }
 	friend bool operator<=(const date& obj, const date& obj2) { return (obj.day <= obj2.day && obj.month <= obj2.month && obj.year <= obj2.year && obj.week_day <= obj2.week_day); }
+
+	friend date operator+=(date& obj, int x);
+	friend date operator-=(date& obj, int x);
+	friend int operator+=(int x, date& obj);
+	friend int operator-=(int x, date& obj);
 
 	date& operator=(const date& obj);
 

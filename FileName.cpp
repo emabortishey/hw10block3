@@ -4,8 +4,8 @@ int main()
 {
 	setlocale(LC_ALL, "russian");
 
-	date obj{ 13, 1, 1, 0};
-	date obj2{ 12, 1, 2008 };
+	date obj{ 13, 1, 2008, 0};
+	date obj2{ 12, 1, 2008, 1 };
 
 
 	/*obj.differ(obj2);
@@ -18,7 +18,18 @@ int main()
 	cout << "Hello";*/
 	//obj.print_date();
 
-	cout << 410 - obj << "\n\n\n" << 1 % 7;
+	obj += 364;
+	cout << obj;
+
+	int buff_year, buff_month, buff_day, diff_days = 733328;
+
+	buff_year = diff_days / 365;
+	buff_month = (diff_days % 365) / 31;
+	buff_day = ((diff_days % 365) % 31);
+
+	cout << buff_day << '\t' << buff_month << '\t' << buff_year;
+
+	//cout << obj;
 
 	return 0;
 }
