@@ -4,10 +4,14 @@ using namespace std;
 
 class date
 {
+	// массив дней недели по которому будет происходить смещение по ним во время операций
 	char** weekdays = new char*[7];
 	int day, month, year;
+	// переменная содержащая индекс по которому мы получаем значение из массива дней недели
 	int week_day;
 public:
+
+	// конструкторы
 
 	date() : date(1, 1, 2000, 0) { }
 	explicit date(int dayP) : date(dayP, 1, 2000, 0) {}
@@ -15,6 +19,7 @@ public:
 	date(int dayP, int monthP, int yearP) : date(dayP, monthP, yearP, 0) {}
 	date(int dayP, int monthP, int yearP, int week_dayP) : day{ dayP }, month{ monthP }, year{ yearP }, week_day{ week_dayP }
 	{
+		// выделение памяти и заполнение массива дней недели
 		for (int i = 0; i < 7; i++)
 		{
 			weekdays[i] = new char[25];
@@ -30,6 +35,7 @@ public:
 	}
 	date(const date& obj) : day{ obj.day }, month{ obj.month }, year{ obj.year }
 	{
+		// копирование массива дней недели из полученного (для сокращения кол-ва строк)
 		for (int i = 0; i < 7; i++)
 		{
 			weekdays[i] = new char[25] {*obj.weekdays[i]};
@@ -38,17 +44,26 @@ public:
 		week_day = obj.week_day;
 	}
 
+	// модификаторы
+
 	void set_day(int dayP) { day = dayP; }
 	void set_month(int monthP) { day = monthP; }
 	void set_year(int yearP) { day = yearP; }
 	void set_week_day(int week_dayP) { week_day = week_dayP; }
 
+	// методы
+
+	int differ(const date& obj) const;
 	void print_date()const;
+
+	// аксессоры
 
 	int get_day()const { return day; }
 	int get_month()const { return month; }
 	int get_year()const { return year; }
 	int get_week_day()const { return week_day; }
+
+	// перегрузки
 
 	friend date operator+(date& obj, int x);
 	friend date operator-(date& obj, int x);
@@ -75,6 +90,11 @@ public:
 
 	date& operator=(const date& obj);
 
-	int differ(const date& obj) const;
+	// деструктор
+
+	~date()
+	{
+		delete[] weekdays;
+	}
 };
 

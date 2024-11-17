@@ -2,8 +2,12 @@
 
 void date::print_date() const
 {
-	cout << day << '\t' << month << '\t' << year << '\t' << week_day;
+	cout << day << '\t' << month << '\t' << year << '\t' << weekdays[week_day];
 }
+
+
+// тут дата переводится в дни, после чего вычисляется разница и выводится значение как разницы в днях так и в формате лет месяцев и дней
+// 0 возвращается если разницы нет, а 1 если она есть
 
 int date::differ(const date& obj) const
 {
@@ -29,7 +33,6 @@ int date::differ(const date& obj) const
 	}
 	else
 	{
-		cout << "\nРазницы нет";
 		return 0;
 	}
 
@@ -60,6 +63,9 @@ date& date::operator=(const date& obj)
 
 	return *this;
 }
+
+// тут особо нечего комментировать, дата переводится в дни, осуществляется сложение\вычитание
+// и дальший перевод обратно в формат даты и возвращение буферного обьекта класса
 
 date operator+(date& obj, int x)
 {
@@ -148,6 +154,7 @@ date operator-(int x, date& obj)
 	return buff;
 }
 
+// в ++ и -- осуществляется проверка на конец года или месяца, чтобы в случае выхода за рамки начался новый год, месяц и так далее
 date& date::operator++()
 {
 	if (day + 1 > 31 && (month * 31 - day) + 1 < 365)
@@ -216,6 +223,9 @@ ostream& operator<<(ostream& cout, const date& obj)
 
 istream& operator>>(istream& cin, date& obj)
 {
+	// ввод дня недели осуществляется по индексу, я конечно могла бы сделать ввод с помощью строки, с последующим сравнением
+	// и уже после присвоением переменной индекса найденной подходящей дню строки, но мне лень, поэтому будет так
+
 	cin >> obj.day >> obj.month >> obj.year >> obj.week_day;
 
 	return cin;
@@ -243,6 +253,8 @@ date operator+=(date& obj, int x)
 
 int operator+=(int x, date& obj)
 {
+	// в случаях когда челочисленной переменной идёт плюс или минус с приравниванием, то возвращается это же целочисленное значение
+	// плюс количество дней в дате, которую прибавили к этому числу
 	int buff_day2 = obj.day, buff_month2 = obj.month, buff_year2 = obj.year, buff_week_day2 = obj.week_day;
 	int diff_days;
 
@@ -277,6 +289,7 @@ date operator-=(date& obj, int x)
 
 int operator-=(int x, date& obj)
 {
+	// тут также как и в плюс равно где первым операндом выступает целочисленная переменная: возвращается это число плюс дата переведённая в дни
 	int buff_day2 = obj.day, buff_month2 = obj.month, buff_year2 = obj.year, buff_week_day2 = obj.week_day;
 	int diff_days;
 
