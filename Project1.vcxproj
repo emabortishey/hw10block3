@@ -129,9 +129,11 @@
   <ItemGroup>
     <ClCompile Include="date.cpp" />
     <ClCompile Include="FileName.cpp" />
+    <ClCompile Include="stri.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="date.h" />
+    <ClInclude Include="stri.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
